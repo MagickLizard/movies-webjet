@@ -1,0 +1,18 @@
+{
+  "name": "webjet-code-challenge-backend",
+  "version": "1.0.0",
+  "description": "This is a code challenge containing a frontend and backend solution for digesting data from a movies api.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./app.js",
+    "test": "test"
+  },
+  "author": "Lizzie King",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  }
+}
