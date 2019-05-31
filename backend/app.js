@@ -9,8 +9,7 @@ app.use(express.json());
 require('./routes/routes')(app);
 
 app.get('', (req, res) => {
-  
-  res.send('PORT 3005');
+  res.send('PORT 3005', res);
 });
 
 app.listen(port, (err) => {

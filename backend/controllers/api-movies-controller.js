@@ -1,22 +1,30 @@
 const MovieService = require("../service/movieService");
 
 class ApiMoviesController {
-  constructor () {
-    this.movieService = new MovieService();
-  }
+  constructor(req, res) {}
+
   handle(req, res) {
-    if (req) { // TODO: 
-     return this.movieService.getMoviesRequest(req)
-    }
-    else {
-      return data = {
-        id: 'Something wrong',
-        movies: ''
-      };
+    let data = "";
+    if (req) {
+      let setMoviesResponse = setMovies(req, res);
+      console.log("setMoviesResponse", setMoviesResponse);
+      return setMoviesResponse;
+    } else {
+      return (data = {
+        id: "Something wrong",
+        movies: ""
+      });
     }
   }
-
 }
+
+setMovies = async (req, res) => {
+  const movieService = new MovieService();
+  let moviesResponse = movieService.apiWrapper("test");
+  moviesResponse.then(response => {
+    console.log("response set moves", response);
+  });
+  return moviesResponse;
+};
+
 module.exports = ApiMoviesController;
-
-

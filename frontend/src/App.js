@@ -20,7 +20,6 @@ class App extends React.Component {
               className="button is-large is-primary"
               onClick={this.getMoviesFromApi}
             >
-              {" "}
               Get Movies!
             </a>
           </div>

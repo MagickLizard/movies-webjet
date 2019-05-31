@@ -1,10 +1,8 @@
 const request = require("request");
-var rp = require('request-promise');
+var rp = require("request-promise");
 
 class MovieService {
-  constructor() {
-    
-  }
+  constructor(path) {}
 
   getOneMovie() {
     const path = "cinemaworld/{movieId}";
@@ -34,12 +32,26 @@ class MovieService {
         } else {
           output.statusCode = response.statusCode;
           output.body = body;
-          console.log("output body, ", output);
-          return output;
+          console.log("output body in promise> ", output);
           resolve(output);
         }
       });
     });
   }
+
+  apiWrapper(path) {
+    let apiAsyncFunc = async path => {
+      try {
+        const data = await this.getMoviesRequest("test");
+        console.log("data requestClean up> ", data);
+        return data;
+      } catch (error) {
+        return error;
+      }
+    };
+    let apiRequestResponse = apiAsyncFunc("path");
+    return Promise.all([apiRequestResponse]);
+  }
 }
+
 module.exports = MovieService;
