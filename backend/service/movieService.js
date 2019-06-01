@@ -34,11 +34,12 @@ class MovieService {
           console.log("err", err);
           reject(err);
         } else {
-          output.success = true;
-          output.statusCode = response.statusCode;
-          try {
-            const requestBody = JSON.parse(body);
+          try { 
+            const requestBody = JSON.parse(body); ///TODO: ERROR IS BEING THROWN HERE 
+            console.log("requestBody", requestBody);
             output.body = requestBody;
+            output.success = true;
+            output.statusCode = response.statusCode;
             resolve(output);
           } catch (err) {
             output.success = false;

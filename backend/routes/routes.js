@@ -5,6 +5,7 @@ const { handler } = require("../controllers/api-movies-controller.js");
 // NOTE: Helmet helps you secure your Express apps by setting various HTTP headers. It's not a silver bullet, but it can help!
 // const helmet = require('helmet');
 module.exports = app => {
+  // white listing 
   const corsOptions = {
     origin: "http://localhost:3001"
   };

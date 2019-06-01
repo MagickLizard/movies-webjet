@@ -1,27 +1,26 @@
 import React from "react";
 import "./App.css";
 import getMovies from "./api/getMovies";
+import Card from "./components/Card/Card";
 
 class App extends React.Component {
-  state = { listOfMovies: [], movies: [] };
-  getMoviesFromApi = async () => {
+  state = { listOfMovies: [], movies: [], movie: "" };
+
+  componentDidMount() {
     getMovies.get("", {}).then(response => {
       console.log("response in frontend>", response);
-      this.setState({ listOfMovies: response });
+      this.setState({ listOfMovies: response.data.body.Movies }); //TODO: ERROR HAPPENS HERE BECAUSE OF MOVIES WHEN BACKEND ERRORS
     });
-  };
+  }
   render() {
     return (
       <div>
         <header className="header" />
         <section className="section">
           <div className="container">
-            <a
-              className="button is-large is-primary"
-              onClick={this.getMoviesFromApi}
-            >
-              Get Movies!
-            </a>
+            <br />
+            <br />
+            <Card className="container" data={this.state.listOfMovies} />
           </div>
         </section>
       </div>
