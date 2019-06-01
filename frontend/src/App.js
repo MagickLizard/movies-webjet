@@ -6,7 +6,7 @@ class App extends React.Component {
   state = { listOfMovies: [], movies: [] };
   getMoviesFromApi = async () => {
     getMovies.get("", {}).then(response => {
-      console.log("response ", response);
+      console.log("response in frontend>", response);
       this.setState({ listOfMovies: response });
     });
   };

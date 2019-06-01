@@ -5,10 +5,13 @@ class MovieService {
   constructor(path) {}
 
   getOneMovie() {
+    //TODO:
+    const movieId = "1";
     const path = "cinemaworld/{movieId}";
     this.getMoviesRequest(path);
   }
   getAllMovies() {
+    //TODO:
     const path = "cinemaworld/movies";
     this.getMoviesRequest(path);
   }
@@ -27,30 +30,24 @@ class MovieService {
       };
       request(options, (err, response, body) => {
         if (err) {
+          output.success = false;
           console.log("err", err);
           reject(err);
         } else {
+          output.success = true;
           output.statusCode = response.statusCode;
-          output.body = body;
-          console.log("output body in promise> ", output);
-          resolve(output);
+          try {
+            const requestBody = JSON.parse(body);
+            output.body = requestBody;
+            resolve(output);
+          } catch (err) {
+            output.success = false;
+            console.log("err", err);
+            reject(err);
+          }
         }
       });
     });
-  }
-
-  apiWrapper(path) {
-    let apiAsyncFunc = async path => {
-      try {
-        const data = await this.getMoviesRequest("test");
-        console.log("data requestClean up> ", data);
-        return data;
-      } catch (error) {
-        return error;
-      }
-    };
-    let apiRequestResponse = apiAsyncFunc("path");
-    return Promise.all([apiRequestResponse]);
   }
 }
 
