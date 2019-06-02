@@ -5,14 +5,12 @@ class MovieService {
   constructor(path) {}
 
   async getOneMovie(path) {
-    const url =
-      "http://webjetapitest.azurewebsites.net/api/" + "cinemaworld" + path;
+    let url = "http://webjetapitest.azurewebsites.net/api/" + path;
+    console.log("url on movie>", url);
     return this.getMoviesRequest(url);
   }
   async getAllMovies(path) {
-    console.log("getall movies", path);
-    const url =
-      "http://webjetapitest.azurewebsites.net/api/" + "cinemaworld" + path;
+    let url = "http://webjetapitest.azurewebsites.net/api/" + path;
     console.log("url", url);
     return this.getMoviesRequest(url);
   }

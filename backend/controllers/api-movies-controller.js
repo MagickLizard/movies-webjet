@@ -1,11 +1,18 @@
 const MovieService = require("../service/movieService");
-
+const { getAllMovies, getMovieById } = require("../models/getRequestModel");
 const handler = async (req, res) => {
   console.log("res>", res.body);
+  let arrayOfRequests = [];
   try {
-    const movieService = new MovieService();
-    let path = "/movies";
-    return await movieService.getAllMovies(path);
+    let requestFilmWorld = await getAllMovies("filmworld");
+    let cinemaworld = await getAllMovies("cinemaworld");
+    arrayOfRequests.push({
+      cinemaWorld: cinemaworld,
+      filmWorld: requestFilmWorld
+    });
+    //TODO add .filter or map or wahtever to only have fields you need
+    console.log("arrayOfRequests", arrayOfRequests);
+    return arrayOfRequests;
   } catch (Error) {
     console.log("error>>>", Error);
     return Error;
@@ -15,17 +22,8 @@ const handler = async (req, res) => {
 const handlerMovie = async (req, res) => {
   handler(req, res)
     .then(request => {
-      let requestResult = request.body.Movies.map(async movie => {
-        const movieService = new MovieService();
-        let path = "/movie/" + movie.ID;
-        try {
-          return await movieService.getOneMovie(path);
-        } catch (Error) {
-          console.log("Error>>>", Error);
-          return Error;
-        }
-      });
-      return Promise.all([requestResult]);
+      let movieIdReqArray = getMovieById(request, "cinemaworld");
+      console.log("movieIdReqArray", movieIdReqArray);
     })
     .catch(error => {
       console.log("error", error);
