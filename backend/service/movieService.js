@@ -4,21 +4,22 @@ var rp = require("request-promise");
 class MovieService {
   constructor(path) {}
 
-  getOneMovie() {
-    //TODO:
-    const movieId = "1";
-    const path = "cinemaworld/{movieId}";
-    this.getMoviesRequest(path);
+  async getOneMovie(path) {
+    const url =
+      "http://webjetapitest.azurewebsites.net/api/" + "cinemaworld" + path;
+    return this.getMoviesRequest(url);
   }
-  getAllMovies() {
-    //TODO:
-    const path = "cinemaworld/movies";
-    this.getMoviesRequest(path);
+  async getAllMovies(path) {
+    console.log("getall movies", path);
+    const url =
+      "http://webjetapitest.azurewebsites.net/api/" + "cinemaworld" + path;
+    console.log("url", url);
+    return this.getMoviesRequest(url);
   }
-  getMoviesRequest(path) {
+  getMoviesRequest(url) {
     let options = {
       method: "GET",
-      uri: "http://webjetapitest.azurewebsites.net/api/cinemaworld/movies",
+      uri: url,
       headers: {
         "x-access-token": "sjd1HfkjU83ksdsm3802k"
       }
@@ -34,8 +35,10 @@ class MovieService {
           console.log("err", err);
           reject(err);
         } else {
-          try { 
-            const requestBody = JSON.parse(body); ///TODO: ERROR IS BEING THROWN HERE 
+          try {
+            let trimBlanks = body.trim();
+            console.log("trimBlanks", trimBlanks);
+            const requestBody = JSON.parse(trimBlanks); ///TODO: ERROR IS BEING THROWN HERE
             console.log("requestBody", requestBody);
             output.body = requestBody;
             output.success = true;

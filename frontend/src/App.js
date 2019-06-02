@@ -11,6 +11,11 @@ class App extends React.Component {
       console.log("response in frontend>", response);
       this.setState({ listOfMovies: response.data.body.Movies }); //TODO: ERROR HAPPENS HERE BECAUSE OF MOVIES WHEN BACKEND ERRORS
     });
+    getMovies.get("movie/", {}).then(response => {
+      //SECOND REQUEST
+      console.log("response in frontend>", response);
+      this.setState({ listOfMovies: response.data.body.Movies });
+    });
   }
   render() {
     return (
