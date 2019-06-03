@@ -13,34 +13,39 @@ const getAllMovies = async path => {
 };
 
 const getMovieById = async (moviesData, pathUrl) => {
-  console.log("moviesData", moviesData);
-  let resp = moviesData.map(movie => {
-    const cinemaWorldRequest = movie.cinemaWorld.body.Movies.map(
-      async movie => {
-        const movieService = new MovieService();
-        let path = pathUrl + "/movie/" + movie.ID;
-        try {
-          return await movieService.getOneMovie(path);
-        } catch (Error) {
-          console.log("Error>>>", Error);
-          return Error;
-        }
-      }
-    );
-    // const filmworldRequest = movie.filmWorld.body.Movies.map(async movie => {
-    //   const movieService = new MovieService();
-    //   path = pathUrl + "/movie/" + movie.ID;
-    //   try {
-    //     return await movieService.getOneMovie(path);
-    //   } catch (Error) {
-    //     console.log("Error>>>", Error);
-    //     return Error;
-    //   }
-    // });
-    return Promise.all([cinemaWorldRequest, filmworldRequest]);
+  const movieRequestWrapper = moviesData.body.Movies.map(async movie => {
+    const movieService = new MovieService();
+    let path = pathUrl + "/movie/" + movie.ID;
+    try {
+      return await movieService.getOneMovie(path);
+    } catch (Error) {
+      console.log("Error>>>", Error);
+      return Error;
+    }
   });
-  console.log("resp", resp);
-  return resp;
+  return movieRequestWrapper;
 };
 
-module.exports = { getAllMovies, getMovieById };
+const getMovieIdWrapper = async request => {
+  let arrayOfMovieData = [];
+  let promisedResponse = request.map(movie => {
+    if (movie.cinemaWorld) {
+      let cinemaworldArray = getMovieById(movie.cinemaWorld, "cinemaworld");
+      arrayOfMovieData.push({ cinemaworldMovieId: cinemaworldArray });
+      return cinemaworldArray;
+    } else if (movie.filmWorld) {
+      let filmworldArray = getMovieById(movie.cinemaWorld, "filmworld");
+      arrayOfMovieData.push({ filmworldMovieId: filmworldArray });
+      return filmworldArray;
+    } else {
+      console.log("in else block getMovieIdWrapper>>>");
+    }
+    console.log("arrayOfMovieData>>>", arrayOfMovieData);
+
+    // return Promise.all([arrayOfMovieData]);
+  });
+  console.log("promisedResponse", promisedResponse);
+  return promisedResponse;
+};
+
+module.exports = { getAllMovies, getMovieById, getMovieIdWrapper };

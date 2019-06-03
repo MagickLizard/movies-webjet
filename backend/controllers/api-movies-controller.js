@@ -1,5 +1,9 @@
 const MovieService = require("../service/movieService");
-const { getAllMovies, getMovieById } = require("../models/getRequestModel");
+const {
+  getAllMovies,
+  getMovieById,
+  getMovieIdWrapper
+} = require("../models/getRequestModel");
 const handler = async (req, res) => {
   console.log("res>", res.body);
   let arrayOfRequests = [];
@@ -20,15 +24,19 @@ const handler = async (req, res) => {
 };
 
 const handlerMovie = async (req, res) => {
-  handler(req, res)
-    .then(request => {
-      let movieIdReqArray = getMovieById(request, "cinemaworld");
-      console.log("movieIdReqArray", movieIdReqArray);
-    })
-    .catch(error => {
-      console.log("error", error);
-      return error;
-    });
+  let allMovies = await handler(req, res);
+  try {
+    return getMovieIdWrapper(allMovies)
+      .then(value => {
+        return value;
+      })
+      .catch(error => {
+        console.log("error in handler movie -inside>", error);
+        return error;
+      });
+  } catch (Error) {
+    console.log("error in handler movie", Error);
+  }
 };
 
 module.exports = { handler, handlerMovie };

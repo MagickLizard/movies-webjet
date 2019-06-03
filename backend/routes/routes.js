@@ -29,7 +29,7 @@ module.exports = app => {
     req.get("Referrer");
     handlerMovie(req, res)
       .then(value => {
-        console.log("value get", value);
+        console.log("value get one movie", value);
         res.body = value;
         res.send(res.body);
       })
