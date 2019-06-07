@@ -6,12 +6,10 @@ class MovieService {
 
   async getOneMovie(path) {
     let url = "http://webjetapitest.azurewebsites.net/api/" + path;
-    console.log("url on movie>", url);
     return this.getMoviesRequest(url);
   }
   async getAllMovies(path) {
     let url = "http://webjetapitest.azurewebsites.net/api/" + path;
-    console.log("url", url);
     return this.getMoviesRequest(url);
   }
   getMoviesRequest(url) {
@@ -35,20 +33,17 @@ class MovieService {
         } else {
           try {
             if (body === "") {
-              console.log(">empty body>>", body);
               console.log("err", err);
               reject(err);
             }
             else if (body && Object.keys(body)) {
               const requestBody = JSON.parse(body); ///TODO: ERROR IS BEING THROWN HERE
-              console.log("requestBody", requestBody);
               output.body = requestBody;
               output.success = true;
               output.statusCode = response.statusCode;
               resolve(output);
             }
           } catch (err) {
-            console.log(">body>>", body);
             console.log("err", err);
             reject(err);
           }

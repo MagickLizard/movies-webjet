@@ -9,24 +9,16 @@ class App extends React.Component {
   componentDidMount() {
     getMovies.get("movies", {}).then(response => {
       console.log("response in frontend>", response.data);
-      // this.setState({ listOfMovies: response.data }); //TODO: ERROR HAPPENS HERE BECAUSE OF MOVIES WHEN BACKEND ERRORS
       this.getMoveIds();
-      // let test = this.getMoveIds();
-      // console.log("tests in frontent>>>", test);
     });
 
-    // .then(response => {
-    //   console.log("response in frontend>", response);
-    //   this.setState({ listOfMovies: response.data.body.Movies }); //TODO: ERROR HAPPENS HERE BECAUSE OF MOVIES WHEN BACKEND ERRORS
-    //   let test = this.getMoveIds();
-    //   console.log("tests in frontent>>>", test);
-    // });
   }
   getMoveIds = () => {
     getMovies.get("movie/", {}).then(response => {
       //SECOND REQUEST
-      console.log("response in frontend second request>", response);
-      this.setState({ movies: response });
+      console.log("response in frontend second request1>", response);
+      console.log("response in frontend second request>", response.data);
+      this.setState({ movies: response.data });
     });
   };
 
@@ -38,7 +30,7 @@ class App extends React.Component {
           <div className="container">
             <br />
             <br />
-            <Card className="container" data={this.state.listOfMovies} />
+            <Card className="container" data={this.state.movies} />
           </div>
         </section>
       </div>

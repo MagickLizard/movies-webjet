@@ -5,8 +5,8 @@ class Movie extends React.Component {
     console.log("thos", this.props);
     return (
       <div className="card">
-        <div>{this.props.movieItem.cinemaWorld.body.Movies}</div>
-        <div>{this.props.movieItem.ID}</div>
+        <div>{this.props.movies.cinemaWorld.body.Movies}</div>
+        <div>{this.props.movies.ID}</div>
         <div className="container">
           {/* <img
           ref={this.props.movieItem.Poster}//TODO

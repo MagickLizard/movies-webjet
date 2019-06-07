@@ -5,7 +5,11 @@ class Card extends React.Component {
   state = { movies: [], movieId: "" };
 
   iterateOverMovies = () => {
+    console.log('props in iterateover>>>', this.props.data)
+    
     return this.props.data.map(movie => {
+      console.log('movie>>>', movie)
+      
       return (
         <Movie key={movie.ID} movieItem={movie}>
         </Movie>

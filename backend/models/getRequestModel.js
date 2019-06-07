@@ -1,7 +1,6 @@
 const MovieService = require("../service/movieService");
 
 const getAllMovies = async path => {
-  console.log("path in model", path);
   try {
     const movieService = new MovieService();
     let pathUrl = path + "/movies";
@@ -13,7 +12,7 @@ const getAllMovies = async path => {
 };
 
 const getMovieById = async (moviesData, pathUrl) => {
-  if (moviesData.body && moviesData.body.Movies) {
+  if (moviesData && moviesData.body && moviesData.body.Movies) {
     return moviesData.body.Movies.map(async movie => {
       const movieService = new MovieService();
       let path = pathUrl + "/movie/" + movie.ID;
@@ -41,7 +40,7 @@ const getMovieIdCinemaWrapper = async request => {
       return Promise.all(cinemaworldArray);
     }
   });
-  console.log(">requestById>>", requestById);
+
   return requestById;
 };
 
@@ -53,7 +52,6 @@ const getMovieIdFilmWrapper = async request => {
       return Promise.all(filmworldArray);
     }
   });
-  console.log(">requestById>>", requestById);
   return requestById;
 };
 

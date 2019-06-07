@@ -6,7 +6,6 @@ const {
   getMovieIdCinemaWrapper,
 } = require("../models/getRequestModel");
 const handler = async (req, res) => {
-  console.log("res>", res.body);
   let arrayOfRequests = [];
   try {
     let requestFilmWorld = await getAllMovies("filmworld");
@@ -15,7 +14,6 @@ const handler = async (req, res) => {
       cinemaWorld: cinemaworld,
       filmWorld: requestFilmWorld
     });
-    console.log("arrayOfRequests", arrayOfRequests);
     return arrayOfRequests;
   } catch (Error) {
     console.log("error>>>", Error);
@@ -24,11 +22,9 @@ const handler = async (req, res) => {
 };
 const AllMovieIdResults = async request => {
   if (request) {
-    console.log('request>>>', request)
     const mapResult = request.map( k => {
       return k.then(item => {
         const movieIds = item.map(i => {
-          console.log("i>>>", i);
           if (i !== undefined) {
             return i;
           } 
@@ -51,9 +47,12 @@ const handlerMovie = async (req, res) => {
     let cinema = await getMovieIdCinemaWrapper(allMovies);
     const filmResponse = await AllMovieIdResults(film);
     const cinemaResponse = await AllMovieIdResults(cinema);
-    console.log('cinemaResponse>>>', cinemaResponse);
-    console.log('filmResponse>>>', filmResponse);
-   finalResponse = {cinemaWorld: cinemaResponse, filmWorld: filmResponse};
+    const filmResult = (filmResponse).reduce((previous, current) => current, {});
+    const cinemaResult = (cinemaResponse).reduce((previous, current) => current, {});
+    console.log('filmResult>>>', filmResult)
+    
+   finalResponse = { cinemaResult, filmResult};
+   console.log('finalResponse>>>', finalResponse)
    return finalResponse;
   } catch (Error) {
     console.log("error in handler movie", Error);
