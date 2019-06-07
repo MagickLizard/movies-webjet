@@ -8,12 +8,13 @@ class App extends React.Component {
 
   componentDidMount() {
     getMovies.get("movies", {}).then(response => {
-      console.log("response in frontend>", response);
-      this.setState({ listOfMovies: response.data }); //TODO: ERROR HAPPENS HERE BECAUSE OF MOVIES WHEN BACKEND ERRORS
+      console.log("response in frontend>", response.data);
+      // this.setState({ listOfMovies: response.data }); //TODO: ERROR HAPPENS HERE BECAUSE OF MOVIES WHEN BACKEND ERRORS
+      this.getMoveIds();
       // let test = this.getMoveIds();
       // console.log("tests in frontent>>>", test);
     });
-    this.getMoveIds();
+
     // .then(response => {
     //   console.log("response in frontend>", response);
     //   this.setState({ listOfMovies: response.data.body.Movies }); //TODO: ERROR HAPPENS HERE BECAUSE OF MOVIES WHEN BACKEND ERRORS

@@ -36,7 +36,6 @@ class MovieService {
           try {
             if (body === "") {
               console.log(">empty body>>", body);
-              output.success = false;
               console.log("err", err);
               reject(err);
             }
@@ -50,8 +49,6 @@ class MovieService {
             }
           } catch (err) {
             console.log(">body>>", body);
-
-            output.success = false;
             console.log("err", err);
             reject(err);
           }

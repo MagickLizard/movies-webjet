@@ -14,51 +14,66 @@ const getAllMovies = async path => {
 
 const getMovieById = async (moviesData, pathUrl) => {
   if (moviesData.body && moviesData.body.Movies) {
-    const movieRequestWrapper = moviesData.body.Movies.map(async movie => {
+   return moviesData.body.Movies.map(async movie => {
       const movieService = new MovieService();
       let path = pathUrl + "/movie/" + movie.ID;
       try {
-        let result = await movieService.getOneMovie(path);
-        let reFormat = { Movies: result };
-        return reFormat;
+        let movieIdResult = await movieService.getOneMovie(path);
+        if (movieIdResult.success) {
+          const reFormat = { Movies: movieIdResult };
+          return reFormat;
+        }
       } catch (Error) {
-        console.log("Error>>>", Error);
-        // return Error;
+        console.log("getMovieById() - Error>>>", Error);
       }
     });
-    console.log("movieRequestWrapper>>>", movieRequestWrapper);
 
-    return movieRequestWrapper;
-  } else {
-    ["test"];
   }
 };
 
 const getMovieIdWrapper = async request => {
-  let arrayOfMovieData = [];
-  return request.map(async movie => {
+    let requestById = request.map(async movie => {
+  
     if (movie.cinemaWorld) {
+
       let cinemaworldArray = await getMovieById(
         movie.cinemaWorld,
         "cinemaworld"
       );
+
       console.log("cinemaworldArray>>>", cinemaworldArray);
+      return Promise.all(cinemaworldArray)
+  // Promise.all([cinemaworldArray])
+  // .then(item => {
+  //   console.log(">item moviewrapper>>", item);
+  //   // return item;
+  // })
+  // .catch(error => {
+  //   console.log("error in handler movie -inside>", error);
+  //   // return error;
+  // });
+      // return Promise.all([cinemaworldArray]);
+      // return cinemaworldArray;
       // arrayOfMovieData.push({ cinemaworldMovieId: cinemaworldArray });
-      return cinemaworldArray;
-    } else if (movie.filmWorld) {
-      const filmworldArray = await getMovieById(movie.cinemaWorld, "filmworld");
-      console.log('filmworldArray>>>', filmworldArray)
-      // arrayOfMovieData.push({ filmworldMovieId: filmworldArray });
-      return filmworldArray;
-    } else {
-      console.log("in else block getMovieIdWrapper>>>");
     }
+    //  else if (movie.filmWorld) {
+
+    //   const filmworldArray = await getMovieById(movie.cinemaWorld, "filmworld");
+    //   // let filmPormiseAll = Promise.all([filmworldArray]);
+    //   resolve(cinemaworldArray)
+    //   console.log('filmworldArray>>>', filmworldArray);
+    //         // return filmworldArray;
+    //   // arrayOfMovieData.push({ filmworldMovieId: filmworldArray });
+    // } else {
+    //   console.log("in else block getMovieIdWrapper>>>");
+    // }
+
     // console.log("arrayOfMovieData>>>", arrayOfMovieData);
-    // return arrayOfMovieData;
+
     // return Promise.all([arrayOfMovieData]);
   });
-  return arrayOfMovieData;
-  // return Promise.all([arrayOfMovieData]);
+console.log('>requestById>>', requestById)
+      return requestById;
 };
 
 module.exports = { getAllMovies, getMovieById, getMovieIdWrapper };

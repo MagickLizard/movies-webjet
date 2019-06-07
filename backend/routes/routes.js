@@ -27,19 +27,12 @@ module.exports = app => {
   });
   app.get("/movie/", cors(corsOptions), (req, res) => {
     req.get("Referrer");
-    handlerMovie(req, res)
+    let responseOfHander = handlerMovie(req, res);
+    console.log('responseOfHander>>>', responseOfHander)
+    
+    responseOfHander
       .then(value => {
-        console.log("value get one movie", value);
-        // let promisedResponse = value.map(movie => {
-        //   console.log("movie ids map>>>", movie);
-        //   movie.map(test => {
-        //     console.log("test>>>", test);
-
-        //     // res.body = movie;
-        //     // res.send(res.body);
-        //   });
-        // });
-        // return promisedResponse;
+        console.log("value get one movie>>>", value);
       })
       .catch(error => {
         console.log("error", error);
