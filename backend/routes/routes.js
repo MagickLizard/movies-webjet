@@ -30,8 +30,16 @@ module.exports = app => {
     handlerMovie(req, res)
       .then(value => {
         console.log("value get one movie", value);
-        res.body = value;
-        res.send(res.body);
+        // let promisedResponse = value.map(movie => {
+        //   console.log("movie ids map>>>", movie);
+        //   movie.map(test => {
+        //     console.log("test>>>", test);
+
+        //     // res.body = movie;
+        //     // res.send(res.body);
+        //   });
+        // });
+        // return promisedResponse;
       })
       .catch(error => {
         console.log("error", error);
