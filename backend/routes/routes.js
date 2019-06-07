@@ -33,6 +33,8 @@ module.exports = app => {
     responseOfHander
       .then(value => {
         console.log("value get one movie>>>", value);
+        res.body = value;
+        res.send(res.body);
       })
       .catch(error => {
         console.log("error", error);
