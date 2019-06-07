@@ -26,9 +26,10 @@ const handler = async (req, res) => {
 const handlerMovie = async (req, res) => {
   let allMovies = await handler(req, res);
   try {
-    let idReq = await getMovieIdWrapper(allMovies);
+    let idRequest = await getMovieIdWrapper(allMovies);
     console.log("idreq>>>", idReq);
-    let values = idReq.cinemaworldMovieId.map(k => {
+    if(idRequest && idRequest.cinemaworldMovieId) {
+    let values = idRequest.cinemaworldMovieId.map(k => {
       k.then(item => {
         console.log(">getMovieIdWrapper>>", value);
         return item;
@@ -37,19 +38,22 @@ const handlerMovie = async (req, res) => {
         return error;
       });
     });
-    // let values = idReq.map(k => {
-    //   console.log("test", k.cinemaworldMovieId);
-    // });
-    // console.log(">values>>", values);
+    console.log('values>>>', values);
+    
+  }
+  if(idRequest && idRequest.filmWorldId) {
+    let values = idRequest.filmWorldId.map(k => {
+      k.then(item => {
+        console.log(">getMovieIdWrapper>>", value);
+        return item;
+      }).catch(error => {
+        console.log("error in handler movie -inside>", error);
+        return error;
+      });
+    });
+    console.log('values>>>', values);
+  }
 
-    // .then(value => {
-    //   console.log(">getMovieIdWrapper>>", value);
-    //   return value;
-    // })
-    // .catch(error => {
-    //   console.log("error in handler movie -inside>", error);
-    //   return error;
-    // });
   } catch (Error) {
     console.log("error in handler movie", Error);
   }

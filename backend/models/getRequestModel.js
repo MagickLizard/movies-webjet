@@ -19,14 +19,8 @@ const getMovieById = async (moviesData, pathUrl) => {
       let path = pathUrl + "/movie/" + movie.ID;
       try {
         let result = await movieService.getOneMovie(path);
-        console.log('result.success>>>', result.success === "true");
-
-        console.log('result>>>', result);
-        return result;
-        // }
-
-        // let reFormat = { Movies: result };
-        // return reFormat;
+        let reFormat = { Movies: result };
+        return reFormat;
       } catch (Error) {
         console.log("Error>>>", Error);
         // return Error;
