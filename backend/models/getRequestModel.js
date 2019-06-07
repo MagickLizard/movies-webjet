@@ -14,7 +14,7 @@ const getAllMovies = async path => {
 
 const getMovieById = async (moviesData, pathUrl) => {
   if (moviesData.body && moviesData.body.Movies) {
-   return moviesData.body.Movies.map(async movie => {
+    return moviesData.body.Movies.map(async movie => {
       const movieService = new MovieService();
       let path = pathUrl + "/movie/" + movie.ID;
       try {
@@ -27,53 +27,40 @@ const getMovieById = async (moviesData, pathUrl) => {
         console.log("getMovieById() - Error>>>", Error);
       }
     });
-
   }
 };
 
-const getMovieIdWrapper = async request => {
-    let requestById = request.map(async movie => {
-  
+const getMovieIdCinemaWrapper = async request => {
+  let requestById = request.map(async movie => {
     if (movie.cinemaWorld) {
-
       let cinemaworldArray = await getMovieById(
         movie.cinemaWorld,
         "cinemaworld"
       );
-
       console.log("cinemaworldArray>>>", cinemaworldArray);
-      return Promise.all(cinemaworldArray)
-  // Promise.all([cinemaworldArray])
-  // .then(item => {
-  //   console.log(">item moviewrapper>>", item);
-  //   // return item;
-  // })
-  // .catch(error => {
-  //   console.log("error in handler movie -inside>", error);
-  //   // return error;
-  // });
-      // return Promise.all([cinemaworldArray]);
-      // return cinemaworldArray;
-      // arrayOfMovieData.push({ cinemaworldMovieId: cinemaworldArray });
+      return Promise.all(cinemaworldArray);
     }
-    //  else if (movie.filmWorld) {
-
-    //   const filmworldArray = await getMovieById(movie.cinemaWorld, "filmworld");
-    //   // let filmPormiseAll = Promise.all([filmworldArray]);
-    //   resolve(cinemaworldArray)
-    //   console.log('filmworldArray>>>', filmworldArray);
-    //         // return filmworldArray;
-    //   // arrayOfMovieData.push({ filmworldMovieId: filmworldArray });
-    // } else {
-    //   console.log("in else block getMovieIdWrapper>>>");
-    // }
-
-    // console.log("arrayOfMovieData>>>", arrayOfMovieData);
-
-    // return Promise.all([arrayOfMovieData]);
   });
-console.log('>requestById>>', requestById)
-      return requestById;
+  console.log(">requestById>>", requestById);
+  return requestById;
 };
 
-module.exports = { getAllMovies, getMovieById, getMovieIdWrapper };
+const getMovieIdFilmWrapper = async request => {
+  let requestById = request.map(async movie => {
+    if (movie.cinemaWorld) {
+      let filmworldArray = await getMovieById(movie.filmWorld, "filmworld");
+      console.log("filmworldArray>>>", filmworldArray);
+      return Promise.all(filmworldArray);
+    }
+  });
+  console.log(">requestById>>", requestById);
+  return requestById;
+};
+
+
+module.exports = {
+  getAllMovies,
+  getMovieById,
+  getMovieIdFilmWrapper,
+  getMovieIdCinemaWrapper
+};
