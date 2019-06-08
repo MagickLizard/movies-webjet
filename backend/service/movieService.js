@@ -10,7 +10,7 @@ class MovieService {
     let url = "http://webjetapitest.azurewebsites.net/api/" + path;
     return this.getMoviesRequest(url);
   }
-  getMoviesRequest(url) {
+  getMoviesRequest(url) {    
     let options = {
       method: "GET",
       uri: url,
@@ -33,7 +33,7 @@ class MovieService {
             if (body === "") {
               console.log("err", err);
               reject(err);
-            } else if (body && Object.keys(body)) {
+            } else if (body && Object.keys(body)) {              
               const requestBody = JSON.parse(body); ///TODO: ERROR IS BEING THROWN HERE
               output.body = requestBody;
               output.success = true;

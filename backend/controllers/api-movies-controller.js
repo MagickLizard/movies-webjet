@@ -5,11 +5,11 @@ const handler = async (req, res) => {
     let requestFilmWorld = await getAllMovies("filmworld");
     let cinemaworld = await getAllMovies("cinemaworld");
     if (cinemaworld && cinemaworld.body) {
-      arrayOfRequests.push({ cinemaWorld: cinemaworld.body.Movies });
+      arrayOfRequests.push({ cinemaworld: cinemaworld.body.Movies });
     }
     if (requestFilmWorld && requestFilmWorld.body) {
       arrayOfRequests.push({
-        filmWorld: requestFilmWorld.body.Movies
+        filmworld: requestFilmWorld.body.Movies
       });
     }
     return arrayOfRequests;
@@ -21,10 +21,8 @@ const handler = async (req, res) => {
 
 const idRequestChecker = async (req, path) => {
   try {
-    let response = await handlerMovie(req, "filmworld");
-    console.log(">idWrapper response>>", response);
+    let response = await handlerMovie(req, path);
     if (response !== undefined) {
-      console.log(">idWrapper response1>>", response !== undefined);
       return response;
     }
   } catch (Error) {
@@ -33,13 +31,14 @@ const idRequestChecker = async (req, path) => {
 }
 
 const idWrapper = async (req, path) => {
-  let arrayTest = [];
-  let filmResponse = await idRequestChecker(req, "filmworld")
-  let cinemaResponse = await idRequestChecker(req, "cinema")
-  console.log('>cinemaResponse>>', cinemaResponse)
-  console.log('>filmResponse>>', filmResponse)
-  let resp = {cinema: cinemaResponse, film: filmResponse}
-  return resp;
+  let idArray = [];
+  let filmResponse = await idRequestChecker(req, "filmworld");
+  let cinemaResponse = await idRequestChecker(req, "cinemaworld");
+  idArray.push({cinema: cinemaResponse, film: filmResponse});
+  console.log('idArray>>>', idArray)
+  
+  // let resp = {cinema: cinemaResponse, film: filmResponse}
+  return idArray;
 };
 
 
