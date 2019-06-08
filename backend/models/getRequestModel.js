@@ -11,54 +11,22 @@ const getAllMovies = async path => {
   }
 };
 
-const getMovieById = async (moviesData, pathUrl) => {
-  if (moviesData && moviesData.body && moviesData.body.Movies) {
-    return moviesData.body.Movies.map(async movie => {
+const getMovieById = async (movieId, path) => {
+  try {
+    if (path === "cinemaworld" || path === "filmworld") {
       const movieService = new MovieService();
-      let path = pathUrl + "/movie/" + movie.ID;
-      try {
-        let movieIdResult = await movieService.getOneMovie(path);
-        if (movieIdResult.success) {
-          const reFormat = { Movies: movieIdResult };
-          return reFormat;
-        }
-      } catch (Error) {
-        console.log("getMovieById() - Error>>>", Error);
+      let pathUrl = path + "/movie/" + movieId;
+      let movieIdResult = await movieService.getOneMovie(pathUrl);
+      if (movieIdResult.success) {
+        return movieIdResult;
       }
-    });
+    }
+  } catch (Error) {
+    console.log("Error>>>", Error);
   }
 };
 
-const getMovieIdCinemaWrapper = async request => {
-  let requestById = request.map(async movie => {
-    if (movie.cinemaWorld) {
-      let cinemaworldArray = await getMovieById(
-        movie.cinemaWorld,
-        "cinemaworld"
-      );
-      console.log("cinemaworldArray>>>", cinemaworldArray);
-      return Promise.all(cinemaworldArray);
-    }
-  });
-
-  return requestById;
-};
-
-const getMovieIdFilmWrapper = async request => {
-  let requestById = request.map(async movie => {
-    if (movie.cinemaWorld) {
-      let filmworldArray = await getMovieById(movie.filmWorld, "filmworld");
-      console.log("filmworldArray>>>", filmworldArray);
-      return Promise.all(filmworldArray);
-    }
-  });
-  return requestById;
-};
-
-
 module.exports = {
   getAllMovies,
-  getMovieById,
-  getMovieIdFilmWrapper,
-  getMovieIdCinemaWrapper
+  getMovieById
 };

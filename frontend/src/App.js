@@ -9,17 +9,46 @@ class App extends React.Component {
   componentDidMount() {
     getMovies.get("movies", {}).then(response => {
       console.log("response in frontend>", response.data);
-      this.getMoveIds();
+      let movieId = this.getMovieId(response.data);
+      console.log('movieId>>>', movieId)
+      
     });
-
   }
-  getMoveIds = () => {
-    getMovies.get("movie/", {}).then(response => {
+  makeMovieRequest = (movieId, path) => {
+    if(movieId) {
+    getMovies.get("movie/", {
+      params: {
+        movieId: movieId,
+        location: path
+      }
+    }).then(response => {
       //SECOND REQUEST
       console.log("response in frontend second request1>", response);
       console.log("response in frontend second request>", response.data);
       this.setState({ movies: response.data });
     });
+  }
+  };
+  getMovieId = allmoviesArray => {
+    console.log("allmoviesArray>>>", allmoviesArray);
+    if(allmoviesArray) {
+    for (let i of allmoviesArray) {
+      if (i.cinemaWorld) {
+        for (let cinema of i.cinemaWorld) {
+          console.log("i in cinema frontend>>>", cinema.ID);
+          // return cinema.ID
+        }
+      }
+      if (i.filmWorld) {
+        for (let film of i.filmWorld) {
+          // console.log("i in film frontend>>>", film.ID);
+          let filmResponse = this.makeMovieRequest(film.ID, 'filmworld');
+          console.log('filmResponse>>>', filmResponse)
+          
+        }
+      }
+    }
+  }
   };
 
   render() {
