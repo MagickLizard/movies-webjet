@@ -5,8 +5,10 @@ class Movie extends React.Component {
     console.log("thos", this.props);
     return (
       <div className="card">
-        <div>{this.props.movies.cinemaWorld.body.Movies}</div>
-        <div>{this.props.movies.ID}</div>
+        <div>Title: {this.props.movieItem.Title}</div>
+        <div>Actors: {this.props.movieItem.Actors}</div>
+        <div>Rating: {this.props.movieItem.Rating}</div>
+        <div>Price: {this.props.movieItem.Price}</div>
         <div className="container">
           {/* <img
           ref={this.props.movieItem.Poster}//TODO
@@ -15,7 +17,7 @@ class Movie extends React.Component {
         /> */}
         </div>
         <div>Year made: {this.props.movieItem.Year}</div>
-        <div>type: {this.props.movieItem.Type}</div>
+        <div>Type: {this.props.movieItem.Type}</div>
       </div>
     );
   }
