@@ -1,8 +1,7 @@
 import React from "react";
 import "./App.css";
 import getMovies from "./api/getMovies";
-import Card from "./components/Card/Card";
-
+import Movie from "./components/Movie/Movie";
 class App extends React.Component {
   state = { listOfMovies: [], movies: [], movie: "" };
 
@@ -10,45 +9,37 @@ class App extends React.Component {
     getMovies.get("movies", {}).then(response => {
       console.log("response in frontend>", response.data);
       let movieId = this.getMovieId(response.data);
-      console.log('movieId>>>', movieId)
-      
+      console.log("movieId>>>", movieId);
     });
   }
   makeMovieRequest = (movieId, path) => {
-    if(movieId) {
-    getMovies.get("movie/", {
-      params: {
-        movieId: movieId,
-        location: path
-      }
-    }).then(response => {
-      //SECOND REQUEST
-      console.log("response in frontend second request1>", response);
-      console.log("response in frontend second request>", response.data);
-      this.setState({ movies: response.data });
-    });
-  }
+
+    if (movieId) {
+      getMovies
+        .get("movie/", {
+          params: {
+            movieId: movieId,
+            location: path
+          }
+        })
+        .then(response => {
+          //SECOND REQUEST
+          console.log("response in frontend second request1>", response.data);
+          console.log(
+            "response in frontend second request>",
+            response.data.body
+          );
+          // return response;
+          // movieIdsArray.push(response)
+          this.setState({ movies: response.data });
+        });
+    }
   };
   getMovieId = allmoviesArray => {
     console.log("allmoviesArray>>>", allmoviesArray);
-    if(allmoviesArray) {
-    for (let i of allmoviesArray) {
-      if (i.cinemaWorld) {
-        for (let cinema of i.cinemaWorld) {
-          console.log("i in cinema frontend>>>", cinema.ID);
-          // return cinema.ID
-        }
+    if (allmoviesArray) {
+      this.makeMovieRequest(allmoviesArray, "cinemaworld");
       }
-      if (i.filmWorld) {
-        for (let film of i.filmWorld) {
-          // console.log("i in film frontend>>>", film.ID);
-          let filmResponse = this.makeMovieRequest(film.ID, 'filmworld');
-          console.log('filmResponse>>>', filmResponse)
-          
-        }
-      }
-    }
-  }
   };
 
   render() {
@@ -59,7 +50,7 @@ class App extends React.Component {
           <div className="container">
             <br />
             <br />
-            <Card className="container" data={this.state.movies} />
+            <Movie className="container" data={this.state.movie} />
           </div>
         </section>
       </div>

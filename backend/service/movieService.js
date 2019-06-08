@@ -1,8 +1,6 @@
 const request = require("request");
-var rp = require("request-promise");
 
 class MovieService {
-  constructor(path) {}
 
   async getOneMovie(path) {
     let url = "http://webjetapitest.azurewebsites.net/api/" + path;
@@ -28,15 +26,14 @@ class MovieService {
       request(options, (err, response, body) => {
         if (err) {
           output.success = false;
-          console.log("err", err);
+          console.log("err in REQUEST", err);
           reject(err);
         } else {
           try {
             if (body === "") {
               console.log("err", err);
               reject(err);
-            }
-            else if (body && Object.keys(body)) {
+            } else if (body && Object.keys(body)) {
               const requestBody = JSON.parse(body); ///TODO: ERROR IS BEING THROWN HERE
               output.body = requestBody;
               output.success = true;

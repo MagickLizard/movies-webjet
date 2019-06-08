@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const {
   handler,
-  handlerMovie
+  idWrapper
 } = require("../controllers/api-movies-controller.js");
 // NOTE: Helmet helps you secure your Express apps by setting various HTTP headers. It's not a silver bullet, but it can help!
 // const helmet = require('helmet');
@@ -27,7 +27,7 @@ module.exports = app => {
   });
   app.get("/movie/", cors(corsOptions), (req, res) => {
     req.get("Referrer");
-    let responseOfHander = handlerMovie(req, res);
+    let responseOfHander = idWrapper(req, res);
     console.log('responseOfHander>>>', responseOfHander)
     
     responseOfHander
