@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import getMovies from "./api/getMovies";
 import Movie from "./components/Movie/Movie";
+import Card from "./components/Card/Card";
 class App extends React.Component {
   state = { listOfMovies: [], movies: [], movie: "" };
 
@@ -25,12 +26,6 @@ class App extends React.Component {
         .then(response => {
           //SECOND REQUEST
           console.log("response in frontend second request1>", response.data);
-          console.log(
-            "response in frontend second request>",
-            response.data.body
-          );
-          // return response;
-          // movieIdsArray.push(response)
           this.setState({ movies: response.data });
         });
     }
@@ -50,7 +45,7 @@ class App extends React.Component {
           <div className="container">
             <br />
             <br />
-            <Movie className="container" data={this.state.movie} />
+            <Card className="container" data={this.state.movies} />
           </div>
         </section>
       </div>

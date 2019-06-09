@@ -1,4 +1,8 @@
-const { getAllMovies, getMovieById, handlerMovie } = require("../models/getRequestModel");
+const {
+  getAllMovies,
+  getMovieById,
+  handlerMovie
+} = require("../models/getRequestModel");
 const handler = async (req, res) => {
   let arrayOfRequests = [];
   try {
@@ -28,29 +32,29 @@ const idRequestChecker = async (req, path) => {
   } catch (Error) {
     console.log("error in handler movie", Error);
   }
-}
+};
 
-const formatResponse = async (idArray) => {
-  let allDataTogether = []
-  for(let i of idArray) {
-    for(let children of i) {
-      if(children !== undefined) {
-      allDataTogether.push(children)
+const formatResponse = async idArray => {
+  let allDataTogether = [];
+  for (let i of idArray) {
+    for (let children of i) {
+      if (children !== undefined) {
+        allDataTogether.push(children);
       }
     }
   }
-return allDataTogether;
-}
+  var uniq = new Set(allDataTogether.map(value => JSON.stringify(value)));
+  var result = Array.from(uniq).map(value => JSON.parse(value));
+  return result;
+};
 const idWrapper = async (req, path) => {
   let idArray = [];
   let filmResponse = await idRequestChecker(req, "filmworld");
   let cinemaResponse = await idRequestChecker(req, "cinemaworld");
   idArray.push(cinemaResponse, filmResponse);
-  console.log('idArray>>>', idArray)
   let result = await formatResponse(idArray);
-  console.log('result>>>', result)
+  console.log("result>>>", result);
   return result;
 };
-
 
 module.exports = { handler, handlerMovie, idWrapper };

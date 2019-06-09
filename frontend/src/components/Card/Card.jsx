@@ -3,20 +3,25 @@ import Movie from "../Movie/Movie";
 
 class Card extends React.Component {
   state = { movies: [], movieId: "" };
+  sortFunction = () => {
+    if (this.props.data) {
+      return this.props.data.sort((a, b) => a.Price - b.Price);
+    }
+  };
 
   iterateOverMovies = () => {
-    console.log('props in iterateover>>>', this.props.data)
-    if(this.props.data) {
-      // return this.props.data.cinemaResult.map(movie => {
-      //   if(movie && movie.Movies !== null) {
-      //     console.log('movie>>>', movie)
-      //     return (
-      //       <Movie key={movie.Movies.body.ID} movieItem={movie.Movies.body}>
-      //       </Movie>
-      //     );
-      //   }
-      // });
-    } 
+    if (this.props.data) {
+      let sortedPrice = this.sortFunction();
+      console.log(">sortedPrice>>", sortedPrice);
+      return sortedPrice.map(movie => {
+        if (movie !== null) {
+          console.log("movie>>>", movie);
+          if (movie) {
+            return <Movie key={movie.ID} movieItem={movie} />;
+          }
+        }
+      });
+    }
   };
   render() {
     return (
