@@ -1,16 +1,23 @@
 const request = require("request");
+const GetRequestHelper = require("../helpers/formatRequestHelper")
 
 class MovieService {
-
+  constructor() {
+ 
+  }
   async getOneMovie(path) {
+    const getRequestHelper = new GetRequestHelper(); 
     let url = "http://webjetapitest.azurewebsites.net/api/" + path;
+    let responseId = await this.getMoviesRequest(url);
+    let res = getRequestHelper.formatRequest(responseId);
+    console.log('res in service>>>', res);
+    return res;
+  }
+   getAllMovies(path) {
+    let url = "http://webjetapitest.azurewebsites.net/api/" + path; 
     return this.getMoviesRequest(url);
   }
-  async getAllMovies(path) {
-    let url = "http://webjetapitest.azurewebsites.net/api/" + path;
-    return this.getMoviesRequest(url);
-  }
-  getMoviesRequest(url) {    
+  getMoviesRequest(url) {   
     let options = {
       method: "GET",
       uri: url,
@@ -32,8 +39,10 @@ class MovieService {
           try {
             if (body === "") {
               console.log("err", err);
+              output.success = false;
               reject(err);
-            } else if (body && Object.keys(body)) {              
+            } 
+            else if (body && Object.keys(body)) {
               const requestBody = JSON.parse(body); ///TODO: ERROR IS BEING THROWN HERE
               output.body = requestBody;
               output.success = true;
@@ -42,6 +51,7 @@ class MovieService {
             }
           } catch (err) {
             console.log("err", err);
+            output.success = false;
             reject(err);
           }
         }
