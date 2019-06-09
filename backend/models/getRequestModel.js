@@ -22,17 +22,19 @@ const requestById = async (req, path) => {
 };
 
 const handlerMovie = async (req, path) => {
+  let arrayOfPromises = [];
   try {
-    let requestBody = req.query.movieId.map(async current => {
+    for(let current of req.query.movieId) {
       let parsed = JSON.parse(current) || {};
-      if (parsed[path]) {
         let resp = await requestById(parsed[path], path);
         if (resp !== undefined) {
-          return resp;
+          console.log('>resp>>', resp)
+          arrayOfPromises.push(resp)
         }
       }
-    });
-    return Promise.all(requestBody);
+      console.log('>arrayOfPromises>>', arrayOfPromises)
+      
+    return Promise.all(arrayOfPromises);
   } catch (Error) {
     console.log("error in handler movie", Error);
   }

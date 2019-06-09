@@ -34,11 +34,10 @@ const idWrapper = async (req, path) => {
   let idArray = [];
   let filmResponse = await idRequestChecker(req, "filmworld");
   let cinemaResponse = await idRequestChecker(req, "cinemaworld");
-  idArray.push({cinema: cinemaResponse, film: filmResponse});
+  idArray.push(cinemaResponse, filmResponse);
   console.log('idArray>>>', idArray)
-  
-  // let resp = {cinema: cinemaResponse, film: filmResponse}
   return idArray;
+
 };
 
 
