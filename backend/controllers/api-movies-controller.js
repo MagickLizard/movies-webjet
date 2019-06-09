@@ -30,14 +30,26 @@ const idRequestChecker = async (req, path) => {
   }
 }
 
+const formatResponse = async (idArray) => {
+  let allDataTogether = []
+  for(let i of idArray) {
+    for(let children of i) {
+      if(children !== undefined) {
+      allDataTogether.push(children)
+      }
+    }
+  }
+return allDataTogether;
+}
 const idWrapper = async (req, path) => {
   let idArray = [];
   let filmResponse = await idRequestChecker(req, "filmworld");
   let cinemaResponse = await idRequestChecker(req, "cinemaworld");
   idArray.push(cinemaResponse, filmResponse);
   console.log('idArray>>>', idArray)
-  return idArray;
-
+  let result = await formatResponse(idArray);
+  console.log('result>>>', result)
+  return result;
 };
 
 

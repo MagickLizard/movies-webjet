@@ -29,12 +29,10 @@ const handlerMovie = async (req, path) => {
         let resp = await requestById(parsed[path], path);
         if (resp !== undefined) {
           console.log('>resp>>', resp)
-          arrayOfPromises.push(resp)
+          return resp;
         }
       }
-      console.log('>arrayOfPromises>>', arrayOfPromises)
-      
-    return Promise.all(arrayOfPromises);
+
   } catch (Error) {
     console.log("error in handler movie", Error);
   }
