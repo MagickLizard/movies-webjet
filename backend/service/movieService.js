@@ -1,23 +1,25 @@
 const request = require("request");
-const GetRequestHelper = require("../helpers/formatRequestHelper")
+const GetRequestHelper = require("../helpers/formatRequestHelper");
 
 class MovieService {
-  constructor() {
- 
-  }
+  constructor() {}
   async getOneMovie(path) {
-    const getRequestHelper = new GetRequestHelper(); 
-    let url = "http://webjetapitest.azurewebsites.net/api/" + path;
-    let responseId = await this.getMoviesRequest(url);
-    let res = getRequestHelper.formatRequest(responseId);
-    console.log('res in service>>>', res);
-    return res;
+    const getRequestHelper = new GetRequestHelper();
+    const url = "http://webjetapitest.azurewebsites.net/api/" + path;
+    const responseId = this.getMoviesRequest(url);
+    const requestResult = getRequestHelper.checkRequest(responseId);
+    console.log("requestResult in service>>>", requestResult);
+    return requestResult;
   }
-   getAllMovies(path) {
-    let url = "http://webjetapitest.azurewebsites.net/api/" + path; 
-    return this.getMoviesRequest(url);
+  async getAllMovies(path) {
+    const getRequestHelper = new GetRequestHelper();
+    const url = "http://webjetapitest.azurewebsites.net/api/" + path;
+    const responseId = this.getMoviesRequest(url);
+    const requestResult = getRequestHelper.checkRequest(responseId);
+    console.log("RequestResponse in service>>>", requestResult);
+    return requestResult;
   }
-  getMoviesRequest(url) {   
+  getMoviesRequest(url) {
     let options = {
       method: "GET",
       uri: url,
@@ -31,29 +33,26 @@ class MovieService {
         statusCode: null
       };
       request(options, (err, response, body) => {
-        if (err) {
-          output.success = false;
-          console.log("err in REQUEST", err);
-          reject(err);
-        } else {
-          try {
-            if (body === "") {
-              console.log("err", err);
-              output.success = false;
-              reject(err);
-            } 
-            else if (body && Object.keys(body)) {
-              const requestBody = JSON.parse(body); ///TODO: ERROR IS BEING THROWN HERE
-              output.body = requestBody;
-              output.success = true;
-              output.statusCode = response.statusCode;
-              resolve(output);
-            }
-          } catch (err) {
-            console.log("err", err);
+        try {
+          if (body === "") {
             output.success = false;
-            reject(err);
+            output.statusCode = 500;
+            output.body = "";
+            output.error = "Error";
+            reject(output);
+          } else if (body && Object.keys(body)) {
+            const requestBody = JSON.parse(body); ///TODO: ERROR IS BEING THROWN HERE
+            output.body = requestBody;
+            output.success = true;
+            output.statusCode = response.statusCode;
+            resolve(output);
           }
+        } catch (err) {
+          output.success = false;
+          output.statusCode = 500;
+          output.body = "";
+          output.error = err;
+          reject(err);
         }
       });
     });

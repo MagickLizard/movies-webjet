@@ -1,12 +1,16 @@
 class FormatRequestHelper {
   constructor() {}
-  formatRequest(output) {
-    
-    if (output && output.success === true) {
-      return output;
-    } else {
-      console.log("output formatRequest BAd>>>", output);
-    }
+  checkRequest(output) {
+    return output
+    .then((result) => {
+      if(result.success === true) {
+        return result;
+      }
+    })
+    .catch((result) => {
+      console.log('getting in the catch>>>', result)
+      return result.error;
+    });
   }
 }
 module.exports = FormatRequestHelper;
