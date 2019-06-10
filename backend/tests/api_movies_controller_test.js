@@ -9,13 +9,13 @@ describe("api movies Controller()", () => {
     it("#Handler - sync test should return pending promise.", async () => {
       const result = handler();
       expect(result).to.exist;
-    }).timeout(2000);
+    }).timeout(3000);
     it("#Handler - should return array of movies.", async () => {
       const result = await handler();
       const fixture = requestFixture._allFilmMovies();
       expect(result).to.exist;
-      expect(result).to.equal(fixture);
-    }).timeout(8000);
+      expect(result).to.deep.equal(fixture);
+    }).timeout(10000);
   });
   describe("idWrapper()", () => {
     it("#IdWrapper - should return a empty array when no path is set.", async () => {

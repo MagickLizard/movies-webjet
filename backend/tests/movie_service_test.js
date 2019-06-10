@@ -53,7 +53,7 @@ describe("MovieService class", () => {
       expect(result).to.exist;
       expect(result).to.be.an('string');
       expect(result).to.deep.equal(errorFixture);
-    }).timeout(6000);
+    }).timeout(8000);
     it("#getOneMovieRequest - Should return error message when wrong path set.", async () => {
       const result = await movieService.getOneMovieRequest();
       const errorFixture = 'Error';

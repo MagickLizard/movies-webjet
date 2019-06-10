@@ -25,7 +25,7 @@ const idRequestChecker = async (req, path) => {
       return response;
     }
   } catch (Error) {
-    return [];
+    return "please try again.";
   }
 };
 
@@ -44,13 +44,18 @@ const formatResponse = async idArray => {
   var result = Array.from(uniq).map(value => JSON.parse(value));
   return result;
 };
-const idWrapper = async (req, path) => {
+const idWrapper = async (req) => {
   let idArray = [];
   let filmResponse = await idRequestChecker(req, "filmworld");
   let cinemaResponse = await idRequestChecker(req, "cinemaworld");
-  idArray.push(cinemaResponse, filmResponse);
-  let result = await formatResponse(idArray);
-  return result;
+  if(filmResponse === undefined && cinemaResponse === undefined) {
+    return "Something went wrong, please try again."; 
+  }
+  else {
+    idArray.push(cinemaResponse, filmResponse);
+    let result = await formatResponse(idArray);
+    return result;
+  }
 };
 
 module.exports = { handler, idWrapper };

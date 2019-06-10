@@ -12,7 +12,6 @@ class Card extends React.Component {
   iterateOverMovies = () => {
     if (this.props.data) {
       let sortedPrice = this.sortFunction();
-      console.log(">sortedPrice>>", sortedPrice);
       return sortedPrice.map(movie => {
         if (movie !== null) {
           console.log("movie>>>", movie);
@@ -23,12 +22,14 @@ class Card extends React.Component {
       });
     }
   };
+  
   render() {
     return (
       <div className="container">
-        <div className="card" />
+        <div className="card">
         {this.iterateOverMovies()}
-      </div>
+        </div>
+        </div>
     );
   }
 }

@@ -4,37 +4,29 @@ import getMovies from "./api/getMovies";
 import Movie from "./components/Movie/Movie";
 import Card from "./components/Card/Card";
 class App extends React.Component {
-  state = { listOfMovies: [], movies: [], movie: "" };
+  state = { listOfMovies: [], movies: [], movie: "", loading: false };
 
   componentDidMount() {
+    this.setState({ loading: true });
     getMovies.get("movies", {}).then(response => {
-      console.log("response in frontend>", response.data);
-      let movieId = this.getMovieId(response.data);
-      console.log("movieId>>>", movieId);
+      this.getMovieById(response.data, "cinemaworld");
     });
   }
-  makeMovieRequest = (movieId, path) => {
-
-    if (movieId) {
+  
+  getMovieById = (movies, path) => {
       getMovies
         .get("movie/", {
           params: {
-            movieId: movieId,
+            movieId: movies,
             location: path
           }
         })
         .then(response => {
-          //SECOND REQUEST
-          console.log("response in frontend second request1>", response.data);
-          this.setState({ movies: response.data });
-        });
-    }
-  };
-  getMovieId = allmoviesArray => {
-    console.log("allmoviesArray>>>", allmoviesArray);
-    if (allmoviesArray) {
-      this.makeMovieRequest(allmoviesArray, "cinemaworld");
-      }
+          this.setState({ movies: response.data, loading: false });
+        })
+        .catch(err => {
+          this.setState({loading: false})
+        })
   };
 
   render() {
@@ -42,10 +34,10 @@ class App extends React.Component {
       <div>
         <header className="header" />
         <section className="section">
-          <div className="container">
+          <div className={`control ${this.state.loading ? "is-large is-loading" : ""}`}>
             <br />
             <br />
-            <Card className="container" data={this.state.movies} />
+            <Card data={this.state.movies}/>
           </div>
         </section>
       </div>

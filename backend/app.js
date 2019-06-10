@@ -4,15 +4,7 @@ const port = 3005;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-// Import Routes directory
-require("./routes/routes")(app);
-
-app.get("", (req, res, status) => {
-  res.status(status).send(req);
-  res.send("PORT 3005", res);
-});
-
+require("./routes/api")(app);
 app.listen(port, err => {
   if (err) {
     console.log("in app", err);
