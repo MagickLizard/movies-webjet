@@ -1,25 +1,35 @@
 ### Webjet code challenge
 
-This a code challenge which uses a api to fetch the results and return them to the user.
+This a code challenge which uses multiple routes to fetch the results and return them to the user.
 
-### IMPORTANT NOTES
+### Important Notes!
 
 node version: `8.12.0`
+
 Please have backend running before starting frontend for this to work.
-I have whitelisted in routes.js the port I am using. Change the port to whatever port the frontend is running at
-e.g.
+
+I have whitelisted in /routes/api.js the port I am using. Change the port to what the frontend will be running at to bi-pass CORS.
+e.g. in:
 `origin: "http://localhost:3001"`
 
-### Routes
 
-GET: `/`
+## Available Scripts:
 
-### Scripts used
+### `yarn start`
 
-### `npm start`
+### `yarn test`
 
-### `npm test`
+### `yarn lint .`
 
-### `npm run lint`
 
-### `npm run cover`
+
+#Further improvements I would make:
+
+I had trouble with displaying the images as it said they where blocked by Cloudfront.
+Add a config for easier use.
+Implement a better timeout for the promise handling.
+Changed passing the first response body through from the frontend in query to be more split up.
+Added a failure component on the frontend and also store the previous state of the card component, so on refresh something is still there.
+Add more test cases.
+
+Cheers!
