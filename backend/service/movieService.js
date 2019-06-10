@@ -1,25 +1,25 @@
 const request = require("request");
-const GetRequestHelper = require("../helpers/formatRequestHelper");
+const FormatRequestHelper = require("../helpers/formatRequestHelper");
 
 class MovieService {
   constructor() {}
-  async getOneMovie(path) {
-    const getRequestHelper = new GetRequestHelper();
+  async getOneMovieRequest(path) {
+    const getRequestHelper = new FormatRequestHelper();
     const url = "http://webjetapitest.azurewebsites.net/api/" + path;
-    const responseId = this.getMoviesRequest(url);
+    const responseId = this.getRequest(url);
     const requestResult = getRequestHelper.checkRequest(responseId);
     console.log("requestResult in service>>>", requestResult);
     return requestResult;
   }
-  async getAllMovies(path) {
-    const getRequestHelper = new GetRequestHelper();
+  async getMoviesRequest(path) {
+    const getRequestHelper = new FormatRequestHelper();
     const url = "http://webjetapitest.azurewebsites.net/api/" + path;
-    const responseId = this.getMoviesRequest(url);
+    const responseId = this.getRequest(url);
     const requestResult = getRequestHelper.checkRequest(responseId);
     console.log("RequestResponse in service>>>", requestResult);
     return requestResult;
   }
-  getMoviesRequest(url) {
+  getRequest(url) {
     let options = {
       method: "GET",
       uri: url,

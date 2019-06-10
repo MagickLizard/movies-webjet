@@ -9,32 +9,53 @@ describe("MovieService class", () => {
   beforeEach(() => {
     movieService = new MovieService();
   });
-  it("Class should be defined", () => { 
+  it("Class should be defined", () => {
     let movieService = new MovieService();
     expect(movieService).to.exist;
   });
-  describe("getAllMovies()", () => {
-    it("#GetAllMovies() - Should return Promise pending when no path is set for sync", () => {
-      const result = movieService.getAllMovies();
+  describe("getOneMovieRequest()", () => {
+    it("#GetAllMovies - Should return Promise pending when no path is set for sync.", () => {
+      const result = movieService.getMoviesRequest();
       expect(result).to.exist;
     });
-    it("#GetAllMovies() - Should throw rejected promise with a error", async () => {
-      const result = await movieService.getAllMovies();
-      console.log('result error throw>>>', result);
-      // const errorFixture =  { success: false, statusCode: 500, body: '', error: 'Error' };
+    it("#GetAllMovies - Should return error string when no path set.", async () => {
+      const result = await movieService.getMoviesRequest();
       const errorFixture = 'Error';
+      expect(result).to.exist;
       expect(result).to.deep.equal(errorFixture);
     }).timeout(6000);
+    it("#GetAllMovies - Should return error string when wrong path set.", async () => {
+      const result = await movieService.getMoviesRequest();
+      const errorFixture = 'Error';
+      expect(result).to.exist;
+      expect(result).to.deep.equal(errorFixture);
+    }).timeout(6000);
+    it("#GetAllMovies - Should get all film movies.", async () => {
+      const result = await movieService.getMoviesRequest("filmworld/movies");
+      expect(result.success).to.exist;
+      expect(result.statusCode).to.exist;
+    }).timeout(8000);
+    it("#GetAllMovies - Should get all cinema movies.", async () => {
+      const result = await movieService.getMoviesRequest("cinemaworld/movies");
+      expect(result.success).to.exist;
+      expect(result.statusCode).to.exist;
+    }).timeout(8000);
   });
-  describe("getOneMovie()", () => {
-    it("#getOneMovie() - Should return Promise pending when no path is set for sync", () => {
-      const result = movieService.getOneMovie();
+  describe("getOneMovieRequest()", () => {
+    it("#getOneMovieRequest - Should return Promise pending when no path is set for sync.", () => {
+      const result = movieService.getOneMovieRequest();
       expect(result).to.exist;
     });
-    it("#getOneMovie() - Should throw rejected promise with a error", async () => {
-      const result = await movieService.getOneMovie();
-      // const errorFixture =  { success: false, statusCode: 500, body: '', error: 'Error' };
+    it("#getOneMovieRequest - Should return error message when no path set.", async () => {
+      const result = await movieService.getOneMovieRequest();
       const errorFixture = 'Error';
+      expect(result).to.exist;
+      expect(result).to.deep.equal(errorFixture);
+    }).timeout(6000);
+    it("#getOneMovieRequest - Should return error message when wrong path set.", async () => {
+      const result = await movieService.getOneMovieRequest();
+      const errorFixture = 'Error';
+      expect(result).to.exist;
       expect(result).to.deep.equal(errorFixture);
     }).timeout(8000);
   });

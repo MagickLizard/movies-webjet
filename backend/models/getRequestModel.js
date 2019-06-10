@@ -4,7 +4,7 @@ const getAllMovies = async path => {
   try {
     const movieService = new MovieService();
     let pathUrl = path + "/movies";
-    return await movieService.getAllMovies(pathUrl);
+    return await movieService.getMoviesRequest(pathUrl);
   } catch (Error) {
     console.log("error>>>", Error);
     return [];
@@ -45,7 +45,7 @@ const getMovieById = async (movieId, path) => {
   try {
     const movieService = new MovieService();
     let pathUrl = path + "/movie/" + movieId;
-    let movieIdResult = await movieService.getOneMovie(pathUrl);
+    let movieIdResult = await movieService.getOneMovieRequest(pathUrl);
     if (movieIdResult.success && movieIdResult.body !== undefined) {
       return movieIdResult.body;
     }
