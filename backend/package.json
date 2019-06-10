@@ -8,15 +8,16 @@
     "lint": "eslint . --fix",
     "test": "mocha ./tests/ --reporter spec"
   },
+  "devDependencies": {
+    "eslint": "^5.16.0"
+  },
   "author": "Lizzie King",
   "license": "ISC",
   "dependencies": {
     "chai": "^4.2.0",
     "cors": "^2.8.5",
-    "elint": "^1.11.1",
     "express": "^4.17.0",
     "mocha": "^6.1.4",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.4"
+    "request": "^2.88.0"
   }
 }

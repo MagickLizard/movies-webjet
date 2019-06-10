@@ -22,7 +22,6 @@ const requestById = async (req, path) => {
 };
 
 const handlerMovie = async (req, path) => {
-  let arrayOfPromises = [];
   try {
     if(req && req.query.movieId) {
     for(let current of req.query.movieId) {

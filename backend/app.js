@@ -7,7 +7,7 @@ app.use(express.json());
 require("./routes/api")(app);
 app.listen(port, err => {
   if (err) {
-    console.log("in app", err);
+    console.log("error", err);
   }
   console.log("Listening on port " + port);
 });

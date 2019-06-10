@@ -3,7 +3,7 @@ import "./App.css";
 import getMovies from "./api/getMovies";
 import Card from "./components/Card/Card";
 class App extends React.Component {
-  state = { listOfMovies: [], movies: [], movie: "", loading: false };
+  state = { movies: [], loading: false };
 
   componentDidMount() {
     this.setState({ loading: true });

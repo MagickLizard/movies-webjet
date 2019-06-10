@@ -2,11 +2,8 @@ import React from "react";
 import Movie from "../Movie/Movie";
 
 class Card extends React.Component {
-  state = { movies: [], movieId: "" };
   sortFunction = () => {
-    if (this.props.data) {
       return this.props.data.sort((a, b) => a.Price - b.Price);
-    }
   };
 
   iterateOverMovies = () => {
