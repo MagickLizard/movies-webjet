@@ -25,12 +25,15 @@ const idRequestChecker = async (req, path) => {
       return response;
     }
   } catch (Error) {
-    return "please try again.";
+    return "Error";
   }
 };
 
 const formatResponse = async idArray => {
   let allDataTogether = [];
+if (idArray === 'Error') {
+  return 'Error'
+}
   for (let i of idArray) {
     if (i !== undefined) {
       for (let children of i) {
@@ -40,22 +43,22 @@ const formatResponse = async idArray => {
       }
     }
   }
-  var uniq = new Set(allDataTogether.map(value => JSON.stringify(value)));
-  var result = Array.from(uniq).map(value => JSON.parse(value));
+  let uniq = new Set(allDataTogether.map(value => JSON.stringify(value)));
+  let result = Array.from(uniq).map(value => JSON.parse(value));
   return result;
 };
 const idWrapper = async (req) => {
   let idArray = [];
   let filmResponse = await idRequestChecker(req, "filmworld");
   let cinemaResponse = await idRequestChecker(req, "cinemaworld");
-  if(filmResponse === undefined && cinemaResponse === undefined) {
-    return "Something went wrong, please try again."; 
+  if (cinemaResponse) {
+    idArray.push(cinemaResponse);
   }
-  else {
-    idArray.push(cinemaResponse, filmResponse);
-    let result = await formatResponse(idArray);
-    return result;
+  if (filmResponse) {
+    filmResponse.push(filmResponse);
   }
+  let result = await formatResponse(idArray);
+  return result;
 };
 
 module.exports = { handler, idWrapper };

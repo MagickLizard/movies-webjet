@@ -17,7 +17,10 @@ module.exports = api => {
         res.body = value;
         res.send(res.body);
       })
-      .catch('A error has occurred.');
+      .catch(err => {
+        res.body = "A error has occurred please try again";
+        res.send(res.body);
+      })
   });
   api.get("/movie/", cors(corsOptions), (req, res) => {
     req.get("Referrer");
@@ -27,6 +30,9 @@ module.exports = api => {
         res.body = value;
         res.send(res.body);
       })
-      .catch('A error has occurred.');
+      .catch(err => {      
+        res.body = "A error has occurred please try again";
+        res.send(res.body);
+      })
   });
 };

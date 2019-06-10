@@ -1,7 +1,7 @@
 /* global it:false, describe:false */
 
 const {handler, idWrapper } = require("../../controllers/api-movies-controller.js");
-const { _allFilmMovies, _filmworldResult } = require("../fixtures/request_fixture.js");
+const { _allFilmMovies } = require("../fixtures/request_fixture.js");
 const expect = require("chai").expect;
 
 describe("api movies Controller()", () => {
@@ -13,8 +13,6 @@ describe("api movies Controller()", () => {
     it("#Handler - should return array of movies.", async () => {
       const result = await handler();
       const fixture = _allFilmMovies();
-      console.log('result>>>', result);
-      
       expect(result).to.exist;
       expect(result).to.deep.equal(fixture);
     }).timeout(10000);

@@ -39,7 +39,7 @@ class MovieService {
             output.error = "Error";
             reject(output);
           } else if (body && Object.keys(body)) {
-            const requestBody = JSON.parse(body); ///TODO: ERROR IS BEING THROWN HERE
+            const requestBody = JSON.parse(body);
             output.body = requestBody;
             output.success = true;
             output.statusCode = response.statusCode;
