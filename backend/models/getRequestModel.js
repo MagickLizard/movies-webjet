@@ -6,19 +6,18 @@ const getAllMovies = async path => {
     let pathUrl = path + "/movies";
     return await movieService.getMoviesRequest(pathUrl);
   } catch (Error) {
-    console.log("error>>>", Error);
     return [];
-    // return Error;
   }
 };
 const requestById = async (req, path) => {
   try {
-    const idResponse = req.map(async i => await getMovieById(i.ID, path));
+    let parsed = JSON.parse(req) || [];
+    const idResponse = parsed[path].map(async i => await getMovieById(i.ID, path));
     if (idResponse !== undefined) {
       return Promise.all(idResponse);
     }
   } catch (Error) {
-    console.log("error in handler movie", Error);
+    return '';
   }
 };
 
@@ -27,16 +26,13 @@ const handlerMovie = async (req, path) => {
   try {
     if(req && req.query.movieId) {
     for(let current of req.query.movieId) {
-      let parsed = JSON.parse(current) || {};
-        let resp = await requestById(parsed[path], path);
+        let resp = await requestById(current, path);
         if (resp !== undefined) {
-          console.log('>resp>>', resp)
           return resp;
         }
       }
     }
   } catch (Error) {
-    console.log("error in handler movie", Error);
     return '';
   }
 };
@@ -50,7 +46,7 @@ const getMovieById = async (movieId, path) => {
       return movieIdResult.body;
     }
   } catch (Error) {
-    console.log("Error in GET MOVIE BY ID>>>", Error);
+    return [];
   }
 };
 

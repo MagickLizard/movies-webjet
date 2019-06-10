@@ -1,5 +1,5 @@
 const { getAllMovies, handlerMovie } = require("../models/getRequestModel");
-const handler = async (req, res) => {
+const handler = async () => {
   let arrayOfRequests = [];
   try {
     let requestFilmWorld = await getAllMovies("filmworld");
@@ -14,7 +14,6 @@ const handler = async (req, res) => {
     }
     return arrayOfRequests;
   } catch (Error) {
-    console.log("error>>>", Error);
     return [];
   }
 };
@@ -26,7 +25,7 @@ const idRequestChecker = async (req, path) => {
       return response;
     }
   } catch (Error) {
-    console.log("error in handler movie", Error);
+    return [];
   }
 };
 
@@ -51,7 +50,6 @@ const idWrapper = async (req, path) => {
   let cinemaResponse = await idRequestChecker(req, "cinemaworld");
   idArray.push(cinemaResponse, filmResponse);
   let result = await formatResponse(idArray);
-  console.log("result>>>", result);
   return result;
 };
 

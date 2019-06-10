@@ -8,7 +8,6 @@ class MovieService {
     const url = "http://webjetapitest.azurewebsites.net/api/" + path;
     const responseId = this.getRequest(url);
     const requestResult = getRequestHelper.checkRequest(responseId);
-    console.log("requestResult in service>>>", requestResult);
     return requestResult;
   }
   async getMoviesRequest(path) {
@@ -16,7 +15,6 @@ class MovieService {
     const url = "http://webjetapitest.azurewebsites.net/api/" + path;
     const responseId = this.getRequest(url);
     const requestResult = getRequestHelper.checkRequest(responseId);
-    console.log("RequestResponse in service>>>", requestResult);
     return requestResult;
   }
   getRequest(url) {

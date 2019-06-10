@@ -16,29 +16,23 @@ module.exports = app => {
     req.get("Referrer");
     handler(req, res)
       .then(value => {
-        console.log("value get", value);
         res.body = value;
         res.send(res.body);
       })
       .catch(error => {
-        console.log("error", error);
-        return error;
+        return 'A error has occurred.'
       });
   });
   app.get("/movie/", cors(corsOptions), (req, res) => {
     req.get("Referrer");
     let responseOfHander = idWrapper(req, res);
-    console.log('responseOfHander>>>', responseOfHander)
-    
     responseOfHander
       .then(value => {
-        console.log("value get one movie>>>", value);
         res.body = value;
         res.send(res.body);
       })
       .catch(error => {
-        console.log("error", error);
-        return error;
+        return 'A error has occurred.'
       });
   });
 };

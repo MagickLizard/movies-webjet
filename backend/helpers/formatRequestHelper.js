@@ -8,7 +8,6 @@ class FormatRequestHelper {
       }
     })
     .catch((result) => {
-      console.log('getting in the catch>>>', result)
       return result.error;
     });
   }
