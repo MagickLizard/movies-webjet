@@ -15,7 +15,7 @@ describe("api movies Controller()", () => {
       const fixture = _allFilmMovies();
       expect(result).to.exist;
       expect(result).to.deep.equal(fixture);
-    }).timeout(10000);
+    }).timeout(9600);
   });
   describe("idWrapper()", () => {
     it("#IdWrapper - should return a empty array when no path is set.", async () => {
