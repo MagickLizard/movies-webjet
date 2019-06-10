@@ -14,14 +14,7 @@ describe("GetAllMovies()", () => {
     expect(allCinemaResults.success).to.exist;
     expect(allCinemaResults.body).to.exist;
     expect(allCinemaResults).to.exist;
-  }).timeout(8000);
-  it("#GetAllMovies - Should return list of movies related to film.", async () => {
-    const result = await getAllMovies("filmworld");
-    expect(result).to.be.an('object');
-    expect(result.success).to.exist;
-    expect(result.body).to.exist;
-    expect(result).to.exist;
-  }).timeout(8000);
+  }).timeout(9000);
 });
 describe("HandlerMovie()", () => {
   it("#HandlerMovie - should return pending for sync and thrown error response.", () => {

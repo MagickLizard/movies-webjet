@@ -30,14 +30,16 @@ class MovieService {
         success: null,
         statusCode: null
       };
-      request(options, (err, response, body) => {
+      let timeout = 6000;
+      request(options, timeout, (err, response, body) => {
         try {
           if (body === "") {
+            err.connect = true;
             output.success = false;
             output.statusCode = 500;
             output.body = "";
             output.error = "Error";
-            reject(output);
+            reject(err);
           } else if (body && Object.keys(body)) {
             const requestBody = JSON.parse(body);
             output.body = requestBody;
@@ -46,6 +48,7 @@ class MovieService {
             resolve(output);
           }
         } catch (err) {
+          err.connect = true;
           output.success = false;
           output.statusCode = 500;
           output.body = "";
