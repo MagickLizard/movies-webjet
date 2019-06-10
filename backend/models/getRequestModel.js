@@ -7,7 +7,8 @@ const getAllMovies = async path => {
     return await movieService.getAllMovies(pathUrl);
   } catch (Error) {
     console.log("error>>>", Error);
-    return Error;
+    return [];
+    // return Error;
   }
 };
 const requestById = async (req, path) => {
@@ -24,6 +25,7 @@ const requestById = async (req, path) => {
 const handlerMovie = async (req, path) => {
   let arrayOfPromises = [];
   try {
+    if(req && req.query.movieId) {
     for(let current of req.query.movieId) {
       let parsed = JSON.parse(current) || {};
         let resp = await requestById(parsed[path], path);
@@ -32,9 +34,10 @@ const handlerMovie = async (req, path) => {
           return resp;
         }
       }
-
+    }
   } catch (Error) {
     console.log("error in handler movie", Error);
+    return '';
   }
 };
 
@@ -54,5 +57,7 @@ const getMovieById = async (movieId, path) => {
 module.exports = {
   getAllMovies,
   getMovieById,
-  handlerMovie
+  handlerMovie,
+  requestById,
+  getMovieById
 };

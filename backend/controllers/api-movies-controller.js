@@ -1,8 +1,4 @@
-const {
-  getAllMovies,
-  getMovieById,
-  handlerMovie
-} = require("../models/getRequestModel");
+const { getAllMovies, handlerMovie } = require("../models/getRequestModel");
 const handler = async (req, res) => {
   let arrayOfRequests = [];
   try {
@@ -19,7 +15,7 @@ const handler = async (req, res) => {
     return arrayOfRequests;
   } catch (Error) {
     console.log("error>>>", Error);
-    return Error;
+    return [];
   }
 };
 
@@ -37,9 +33,11 @@ const idRequestChecker = async (req, path) => {
 const formatResponse = async idArray => {
   let allDataTogether = [];
   for (let i of idArray) {
-    for (let children of i) {
-      if (children !== undefined) {
-        allDataTogether.push(children);
+    if (i !== undefined) {
+      for (let children of i) {
+        if (children !== undefined) {
+          allDataTogether.push(children);
+        }
       }
     }
   }
