@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./app.js",
     "lint": "eslint . --fix",
-    "test": "mocha ./tests/ --reporter spec"
+    "test": "mocha ./tests/*/ --reporter spec"
   },
   "devDependencies": {
     "eslint": "^5.16.0"

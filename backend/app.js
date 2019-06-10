@@ -5,6 +5,9 @@ const port = 3005;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 require("./routes/api")(app);
+
+app.get('', () => {
+})
 app.listen(port, err => {
   if (err) {
     console.log("error", err);

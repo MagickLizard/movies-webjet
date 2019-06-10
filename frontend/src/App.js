@@ -8,7 +8,7 @@ class App extends React.Component {
   componentDidMount() {
     this.setState({ loading: true });
     getMovies.get("movies", {}).then(response => {
-      this.getMovieById(response.data, "cinemaworld");
+      this.getMovieById(response.data);
     });
   }
   
@@ -16,8 +16,7 @@ class App extends React.Component {
       getMovies
         .get("movie/", {
           params: {
-            movieId: movies,
-            location: path
+            movieId: movies
           }
         })
         .then(response => {

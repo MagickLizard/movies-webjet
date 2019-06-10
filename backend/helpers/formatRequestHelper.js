@@ -7,8 +7,8 @@ class FormatRequestHelper {
         return result;
       }
     })
-    .catch((result) => {
-      return result.error;
+    .catch(() => {
+      return 'Error'
     });
   }
 }

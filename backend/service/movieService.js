@@ -49,7 +49,7 @@ class MovieService {
           output.success = false;
           output.statusCode = 500;
           output.body = "";
-          output.error = err;
+          output.error = "Error";
           reject(err);
         }
       });

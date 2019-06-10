@@ -1,7 +1,7 @@
 /* global it:false, describe:false */
 
-const {handler, idWrapper } = require("../controllers/api-movies-controller.js");
-const requestFixture = require("./fixtures/request_fixture.js");
+const {handler, idWrapper } = require("../../controllers/api-movies-controller.js");
+const { _allFilmMovies, _filmworldResult } = require("../fixtures/request_fixture.js");
 const expect = require("chai").expect;
 
 describe("api movies Controller()", () => {
@@ -12,16 +12,20 @@ describe("api movies Controller()", () => {
     }).timeout(3000);
     it("#Handler - should return array of movies.", async () => {
       const result = await handler();
-      const fixture = requestFixture._allFilmMovies();
+      const fixture = _allFilmMovies();
+      console.log('result>>>', result);
+      
       expect(result).to.exist;
       expect(result).to.deep.equal(fixture);
     }).timeout(10000);
   });
   describe("idWrapper()", () => {
     it("#IdWrapper - should return a empty array when no path is set.", async () => {
-      const result = await idWrapper();
-      expect(result).to.exist;
-    }).timeout(6000);
+      const idResult = await idWrapper();
+      expect(idResult).to.exist;
+      expect(idResult).to.deep.equal([]);
+      expect(idResult).to.be.an('array');
+    }).timeout(4000);
     it("#IdWrapper should return array of movie details.", async () => {
       const requestQueryFixtureWithId = {
         req: {
@@ -34,7 +38,7 @@ describe("api movies Controller()", () => {
       expect(result).to.exist;
       expect(result).to.be.an("array");
       expect(result).to.deep.equal([]);
-    }).timeout(6000);
+    }).timeout(4000);
     it("#IdWrapper - should return empty array when movieId wrong.", async () => {
       const requestQueryFixture = {
         req: {
@@ -47,6 +51,6 @@ describe("api movies Controller()", () => {
       expect(result).to.exist;
       expect(result).to.be.an("array");
       expect(result).to.deep.equal([]);
-    }).timeout(6000);
+    }).timeout(3000);
   });
 });
