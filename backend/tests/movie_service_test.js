@@ -17,6 +17,7 @@ describe("MovieService class", () => {
     it("#GetAllMovies - Should return Promise pending when no path is set for sync.", () => {
       const result = movieService.getMoviesRequest();
       expect(result).to.exist;
+      expect(result).to.be.an('promise');
     });
     it("#GetAllMovies - Should return error string when no path set.", async () => {
       const result = await movieService.getMoviesRequest();
@@ -50,6 +51,7 @@ describe("MovieService class", () => {
       const result = await movieService.getOneMovieRequest();
       const errorFixture = 'Error';
       expect(result).to.exist;
+      expect(result).to.be.an('string');
       expect(result).to.deep.equal(errorFixture);
     }).timeout(6000);
     it("#getOneMovieRequest - Should return error message when wrong path set.", async () => {

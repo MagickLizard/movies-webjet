@@ -53,4 +53,4 @@ const idWrapper = async (req, path) => {
   return result;
 };
 
-module.exports = { handler, handlerMovie, idWrapper };
+module.exports = { handler, idWrapper };

@@ -6,6 +6,7 @@ const expect = require("chai").expect;
 describe("GetAllMovies()", () => {
   it("#GetAllMovies - should return pending", () => {
     expect(getAllMovies()).to.exist;
+    expect(getAllMovies()).to.be.an('promise');
   });
   it("#GetAllMovies - Should return list of movies related to cinema.", async () => {
     const result = await getAllMovies("cinemaworld");

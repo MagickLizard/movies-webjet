@@ -54,6 +54,5 @@ module.exports = {
   getAllMovies,
   getMovieById,
   handlerMovie,
-  requestById,
-  getMovieById
+  requestById
 };
