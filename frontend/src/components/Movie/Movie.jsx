@@ -6,7 +6,7 @@ class Movie extends React.Component {
       <div className="card">
         <header className="card-header">
           <p className="card-header-title">
-            <div> {this.props.movieItem.Title}</div>
+             {this.props.movieItem.Title}
           </p>
         </header>
         <div className="card-content">
@@ -24,9 +24,9 @@ class Movie extends React.Component {
         </div>
         <footer className="card-footer">
         
-          <a href="" className="card-footer-item">
+          <div className="card-footer-item">
           {this.props.movieItem.Genre}
-          </a>
+          </div>
         </footer>
       </div>
     );

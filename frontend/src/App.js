@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import getMovies from "./api/getMovies";
-import Movie from "./components/Movie/Movie";
 import Card from "./components/Card/Card";
 class App extends React.Component {
   state = { listOfMovies: [], movies: [], movie: "", loading: false };
